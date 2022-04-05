@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Data;
 using GroupProject.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GroupProject.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly GroupProjectContext _context;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public ProductsController(GroupProjectContext context)
+        public ProductsController(GroupProjectContext context, IHostingEnvironment hostEnv)
         {
             _context = context;
+            hostingEnvironment = hostEnv;
         }
 
         // GET: Products
@@ -54,15 +58,35 @@ namespace GroupProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,Price,ImageName,Category")] Product product)
+        //public async Task<IActionResult> Create([Bind("Id,ProductName,Price,ImageName,Category")] Product product)
+        public async Task<IActionResult> Create(ProductViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                string uniqueFilename = null;
+                if(model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+
+                    uniqueFilename = Guid.NewGuid() + "_" + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFilename);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                Product newProduct = new Product
+                {
+                    Id = model.Id,
+                    ProductName = model.ProductName,
+                    Price = model.Price,
+                    ImageName = uniqueFilename,
+                    Category = model.Category
+                };
+
+                _context.Add(newProduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(model);
         }
 
         // GET: Products/Edit/5

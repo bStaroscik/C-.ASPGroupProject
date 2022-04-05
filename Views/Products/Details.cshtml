@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var photoImage = "~/images/" + (Model.ImageName ?? "No-Image.png");
 }
 
 <h1>Details</h1>
@@ -10,29 +11,35 @@
     <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProductName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ImageName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImageName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@photoImage" width="120" asp-append-version="true" />
         </dd>
     </dl>
 </div>
