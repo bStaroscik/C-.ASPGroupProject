@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GroupProject.Data
 {
-    public class GroupProjectContext : DbContext
+    public class GroupProjectContext : IdentityDbContext
     {
         public GroupProjectContext (DbContextOptions<GroupProjectContext> options)
             : base(options)
@@ -18,7 +19,7 @@ namespace GroupProject.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders {get; set;}
 
-        public DbSet<GroupProject.Models.Product> Product { get; set; }
+        public DbSet<GroupProject.Models.Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
