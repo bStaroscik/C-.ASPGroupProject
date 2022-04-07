@@ -14,14 +14,26 @@ namespace GroupProject.Data
             : base(options)
         {
         }
+        public DbSet<Customer> Customers { get; set; }
 
-        public DbSet<GroupProject.Models.Product> Product { get; set; }
+        public DbSet<GroupProject.Models.Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Customer>().HasData(
+    new Customer
+    {
+        ID = 1,
+        UserName = "JJones",
+        FirstName = "John",
+        LastName = "Jones",
+        Address = "1111 D St",
+        Email = "a@g.com"
 
-            builder.Entity<Product>()
+    });
+
+builder.Entity<Product>()
                 .Property(o => o.Price).HasColumnType("decimal(8,2)");
 
             builder.Entity<Product>().HasData(
