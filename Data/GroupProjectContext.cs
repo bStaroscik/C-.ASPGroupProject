@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GroupProject.Data
 {
-    public class GroupProjectContext : DbContext
+    public class GroupProjectContext : IdentityDbContext
     {
         public GroupProjectContext (DbContextOptions<GroupProjectContext> options)
             : base(options)
