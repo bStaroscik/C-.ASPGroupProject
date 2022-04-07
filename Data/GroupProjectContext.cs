@@ -12,14 +12,32 @@ namespace GroupProject.Data
         public GroupProjectContext (DbContextOptions<GroupProjectContext> options)
             : base(options)
         {
+
         }
+
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders {get; set;}
 
         public DbSet<GroupProject.Models.Product> Product { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+          //  builder.Entity<Order>().HasData(
+//new Order
+//{
+//   //ProductID =  ,
+//   CustomerID = ,
+//   FirstName = "John",
+//   LastName = "Jones",
+//   Address = "1111 D St",
+//   Email = "a@g.com"
+
+//});
+
+
+
             builder.Entity<Customer>().HasData(
     new Customer
     {
