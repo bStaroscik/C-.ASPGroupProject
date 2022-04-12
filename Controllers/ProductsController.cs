@@ -209,6 +209,7 @@ namespace GroupProject.Controllers
         private Cart GetCart()
         {
             Cart cart = HttpContext.Session.GetObject<Cart>("Cart") ?? new Cart();
+            return cart;
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model CartIndexViewModel
+@{
+    ViewData["Title"] = "AddToCart";
+}
+
+<h1>Your Cart</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var line in Model.Cart.Lines)
+            {
+                <tr>
+                    <td>@line.Quantity</td>
+                    <td>@line.Product.ProductName</td>
+                    <td>@line.Product.Price.ToString("c")</td>
+                    <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>
+                    <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
+                </tr>
+            }
+    </tbody>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="/@Model.ReturnUrl">Continue Shopping</a>
+</div>
