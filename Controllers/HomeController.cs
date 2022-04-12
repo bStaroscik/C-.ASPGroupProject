@@ -1,4 +1,5 @@
 ﻿using GroupProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,8 +18,26 @@ namespace GroupProject.Controllers
         {
             _logger = logger;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult IsLoggedIn()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult IsAdmin()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Moderator")]
+        public IActionResult IsModerator()
         {
             return View();
         }
