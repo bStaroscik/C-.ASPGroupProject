@@ -172,5 +172,44 @@ namespace GroupProject.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+        public IActionResult AddToCart(int? id, string returnUrl)
+        {
+            Product product = _context.Product.FirstOrDefault(p => p.Id == id);
+
+            if(product != null)
+            {
+                Cart cart = GetCart();
+                cart.AddItem(product, 1);
+                SaveCart(cart);
+            }
+
+            return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
+        }
+
+        public IActionResult RemoveFromCart(int? id, string returnUrl)
+        {
+            Product product = _context.Product.FirstOrDefault(p => p.Id == id);
+
+            if(product != null)
+            {
+                Cart cart = GetCart();
+                cart.RemoveLine(product);
+                SaveCart(cart);
+            }
+
+            return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
+        }
+
+        private void SaveCart(Cart cart)
+        {
+            HttpContext.Session.SetObject("Cart", cart);
+        }
+
+        private Cart GetCart()
+        {
+            Cart cart = HttpContext.Session.GetObject<Cart>("Cart") ?? new Cart();
+            return cart;
+        }
     }
 }
