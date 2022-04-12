@@ -4,9 +4,14 @@
 
 <header>
     <div class="jumbotron">
-        <img id="logo" alt="Marketplace Logo" src="~/images/marketplaceLogo.png" class="img-fluid rounded" width="200"/> <strong class="display-4">The Market Place</strong>
-        <br />
-        <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+        <div class="media">
+            <div class="media-body">
+                <h5 class="mt-0 display-4">The Market Place</h5>
+                <p>To view a list of our products, click the below button or use the menu above to navigate to either Home, About Us, or Products.  To login or create an account, click on the Login or Register buttons in the menu above on the right.</p>
+                <a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+            </div>
+            <img class="align-self-center mr-3" src="~/images/marketplaceLogo.png" alt="Marketplace Logo" width="150">
+        </div>
     </div>
 </header>
 
