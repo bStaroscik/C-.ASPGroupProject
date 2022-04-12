@@ -13,15 +13,15 @@ namespace GroupProject.Controllers
     public class CustomerController : Controller
     {
 
-            private readonly GroupProjectContext _context;
-           
+        private readonly GroupProjectContext _context;
 
 
-            public CustomerController(GroupProjectContext context)
-            {
-                _context = context;
-                
-            }
+
+        public CustomerController(GroupProjectContext context)
+        {
+            _context = context;
+
+        }
         public async Task<IActionResult> Index()
         {
             return View(await _context.Customers.ToListAsync());
@@ -53,15 +53,15 @@ namespace GroupProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
 
                 Customer newCustomer = new Customer
                 {
                     UserName = model.UserName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Address=model.Address,
-                    Email=model.Email
+                    Address = model.Address,
+                    Email = model.Email
                 };
 
                 _context.Add(newCustomer);
@@ -149,7 +149,32 @@ namespace GroupProject.Controllers
         {
             return _context.Customers.Any(e => e.ID == id);
         }
+        public IActionResult CreateReview()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateReview(Review model)
+        {
+            if (ModelState.IsValid)
+            {
 
 
+                Review newReview = new Review
+                {
+                    User = model.User,
+                    ReviewText = model.ReviewText,
+                    Rating = model.Rating
+                };
+
+                _context.Add(newReview);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+
+
+        }
     }
 }
