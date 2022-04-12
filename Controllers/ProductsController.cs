@@ -75,7 +75,6 @@ namespace GroupProject.Controllers
 
                 Product newProduct = new Product
                 {
-                    
                     ProductName = model.ProductName,
                     Price = model.Price,
                     ImageName = uniqueFilename,
