@@ -18,7 +18,7 @@ namespace GroupProject.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders {get; set;}
-
+        //public DbSet<Review> Reviews { get; set; }
         public DbSet<GroupProject.Models.Product> Product { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
