@@ -13,16 +13,19 @@
             <th>Price</th>
             <th>Subtotal</th>
             <th></th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach(var line in Model.Cart.Lines)
             {
                 <tr>
-                    <td>@line.Quantity</td>
+                    <td><input type="number" value="@line.Quantity" /></td>
                     <td>@line.Product.ProductName</td>
                     <td>@line.Product.Price.ToString("c")</td>
                     <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>
+                    <td><a class="btn btn-primary" asp-action="UpdateQuantity" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/AddToCart">Update Quantity</a></td>
                     <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
                 </tr>
             }

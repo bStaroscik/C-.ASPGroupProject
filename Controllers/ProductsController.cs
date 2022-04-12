@@ -201,6 +201,21 @@ namespace GroupProject.Controllers
             return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
         }
 
+        //Call Update method from Cart class
+        public IActionResult UpdateQuantity(int? id, string returnUrl)
+        {
+            Product product = _context.Product.FirstOrDefault(p => p.Id == id);
+
+            if (product != null)
+            {
+                Cart cart = GetCart();
+                cart.RemoveLine(product);
+                SaveCart(cart);
+            }
+
+            return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
+        }
+
         private void SaveCart(Cart cart)
         {
             HttpContext.Session.SetObject("Cart", cart);

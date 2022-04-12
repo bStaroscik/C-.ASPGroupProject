@@ -27,6 +27,8 @@ namespace GroupProject.Models
 
         public virtual void RemoveLine(Product product) => lineCollection.RemoveAll(l => l.Product.Id == product.Id);
 
+        //Create an UpdateItem method that is based off of the AddItem method
+
         public virtual decimal ComputeTotalValue() => lineCollection.Sum(e => e.Product.Price * e.Quantity);
 
 
