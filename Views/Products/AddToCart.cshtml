@@ -21,7 +21,7 @@
         @foreach(var line in Model.Cart.Lines)
             {
                 <tr>
-                    <td><input type="number" value="@line.Quantity" /></td>
+                    <td><input type="number" value="@line.Quantity" id="quantityNum" name="quantityNum" asp-for="@line.Quantity" /></td>
                     <td>@line.Product.ProductName</td>
                     <td>@line.Product.Price.ToString("c")</td>
                     <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>

@@ -202,14 +202,14 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-        public IActionResult UpdateQuantity(int? id, string returnUrl)
+        public IActionResult UpdateQuantity(int id, string returnUrl)
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
 
             if (product != null)
             {
                 Cart cart = GetCart();
-                cart.RemoveLine(product);
+                cart.UpdateItem(id);
                 SaveCart(cart);
             }
 

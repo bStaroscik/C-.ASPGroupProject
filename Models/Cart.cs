@@ -28,6 +28,10 @@ namespace GroupProject.Models
         public virtual void RemoveLine(Product product) => lineCollection.RemoveAll(l => l.Product.Id == product.Id);
 
         //Create an UpdateItem method that is based off of the AddItem method
+        public virtual void UpdateItem(int id)
+        {
+            lineCollection.Find(p => p.CartLineID == id).Quantity = 3;
+        }
 
         public virtual decimal ComputeTotalValue() => lineCollection.Sum(e => e.Product.Price * e.Quantity);
 
