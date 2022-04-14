@@ -13,6 +13,8 @@
     <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/
                        jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/c1c2f0c6bc.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -34,6 +36,23 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminPanel">Admin</a>
+                            </li>
+
+                        }
+                        @if (User.IsInRole("Moderator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ModeratorPanel">Moderator</a>
+                            </li>
+
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="AddToCart"> <i class="fa-solid fa-cart-shopping"></i></a>
                         </li>
 
                     </ul>
