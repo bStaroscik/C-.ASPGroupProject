@@ -24,10 +24,24 @@ namespace GroupProject.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
-        {
+        //public async Task<IActionResult> Index()
+        //{
 
-            return View(await _context.Product.ToListAsync());
+        //    return View(await _context.Product.ToListAsync());
+        //}
+
+        public ActionResult Index(string id)
+        {
+            string searchString = id;
+            var products = from p in _context.Product
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(searchString));
+            }
+
+            return View(products);
         }
 
         // GET: Products/Details/5
