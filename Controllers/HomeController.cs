@@ -31,13 +31,13 @@ namespace GroupProject.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult IsAdmin()
+        public IActionResult AdminPanel()
         {
             return View();
         }
 
         [Authorize(Roles = "Moderator")]
-        public IActionResult IsModerator()
+        public IActionResult ModeratorPanel()
         {
             return View();
         }
