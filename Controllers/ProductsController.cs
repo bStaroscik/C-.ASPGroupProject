@@ -26,6 +26,7 @@ namespace GroupProject.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Product.ToListAsync());
         }
 
