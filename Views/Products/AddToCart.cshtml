@@ -10,7 +10,7 @@
     double totalDue = 0.0;
 }
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped list ">
     <thead>
         <tr>
             <th>Quantity</th>
@@ -25,7 +25,8 @@
         @foreach(var line in Model.Cart.Lines)
             {
                 totalItems += (int)line.Quantity;
-                totalDue += (double) line.Product.Price;
+                totalDue += (double)line.Product.Price;
+
                 <tr>
                     <td><input type="number" value="@line.Quantity" /></td>
                     <td>@line.Product.ProductName</td>
