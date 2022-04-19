@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<GroupProject.Models.Product>
 
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,8 +14,40 @@
 </p>
 
 }
+<div class="row w-100 p-0 w-0">
+        
+@foreach (var item in Model)
+{
+    <div class="col-lg-4 mb-2">
+        <div div class="card mx-auto" style="width:18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h5>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Price)</p>
+                <p class="card-text">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <p>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                            <a asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
+                        </p>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+}
+</div>
 
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -68,4 +101,4 @@
         </tr>
         }
     </tbody>
-</table>
+</table>*@
