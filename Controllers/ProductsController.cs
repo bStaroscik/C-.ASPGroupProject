@@ -182,6 +182,8 @@ namespace GroupProject.Controllers
                 Cart cart = GetCart();
                 cart.AddItem(product, 1);
                 SaveCart(cart);
+
+         
             }
 
             return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
@@ -211,6 +213,7 @@ namespace GroupProject.Controllers
                 Cart cart = GetCart();
                 cart.RemoveLine(product);
                 SaveCart(cart);
+               
             }
 
             return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });

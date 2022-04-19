@@ -19,5 +19,6 @@ namespace GroupProject.Models
         [Display(Name = "Product Rating")]
         [Range(1,5)]
         public int Rating { get; set; }
+
     }
 }

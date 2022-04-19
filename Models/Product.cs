@@ -17,6 +17,7 @@ namespace GroupProject.Models
         [Display(Name = "Image Name")]
         public string ImageName { get; set; }
         public string Category { get; set; }
+      //  public List<Review> reviews { get; set; }
 
     }
 }
