@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupProject.Migrations
 {
     [DbContext(typeof(GroupProjectContext))]
-    [Migration("20220407233831_ProductClass")]
-    partial class ProductClass
+    [Migration("20220421133755_ProductDB")]
+    partial class ProductDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,7 +103,7 @@ namespace GroupProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
 
                     b.HasData(
                         new

@@ -10,31 +10,32 @@
     double totalDue = 0.0;
 }
 
-<table class="table table-bordered table-striped list ">
-    <thead>
-        <tr>
-            <th>Quantity</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Subtotal</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var line in Model.Cart.Lines)
+    <table class="table table-bordered table-striped list ">
+        <thead>
+            <tr>
+                <th>Quantity</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Cart.Lines)
             {
                 totalItems += (int)line.Quantity;
                 totalDue += (double)line.Product.Price;
 
-                <tr>
-                    <td><input type="number" value="@line.Quantity" /></td>
-                    <td>@line.Product.ProductName</td>
-                    <td>@line.Product.Price.ToString("c")</td>
-                    <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>
-                    <td><a class="btn btn-primary" asp-action="UpdateQuantity" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/AddToCart">Update Quantity</a></td>
-                    <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
-                </tr>
+            <tr>
+                <td><input type="number" value="@line.Quantity" name="quantity"></td>
+                <td>@line.Product.ProductName</td>
+                <td>@line.Product.Price.ToString("c")</td>
+                <td>@((line.Quantity * line.Product.Price).ToString("c"))</td>
+
+                <td><a class="btn btn-primary" asp-action="UpdateQuantity" asp-route-id="@line.Product.Id" asp-route-quantity="quantity" asp-route-returnUrl="Products/AddToCart">Update Quantity</a></td>
+                <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@line.Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
+            </tr>
             }
             <tr>
                 <td></td>
@@ -44,10 +45,10 @@
                 <td><h5>@totalItems Item(s) in Cart</h5></td>
                 <td><h5>Total Due: @totalDue.ToString("c")</h5></td>
             </tr>
-                
-            
-    </tbody>
-</table>
+
+
+        </tbody>
+    </table>
 
 <div class="text-center">
     <a class="btn btn-primary" href="/@Model.ReturnUrl">Continue Shopping</a>

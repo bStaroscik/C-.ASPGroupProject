@@ -28,21 +28,36 @@ namespace GroupProject.Models
         public virtual void RemoveLine(Product product) => lineCollection.RemoveAll(l => l.Product.Id == product.Id);
 
         //Create an UpdateItem method that is based off of the AddItem method
-        public virtual void UpdateItem(int id)
+        
+        public virtual void UpdateItem(Product product, int quantity)
         {
-            lineCollection.Find(p => p.CartLineID == id).Quantity = 3;
-        }
+            CartLine line = lineCollection
+            .Where(p => p.Product.Id == product.Id)
+            .FirstOrDefault();
+                    //if more than one type of item in cart, add to quantity instead of creating another instance of the same item. 
+                    if (line == null)
+                    {
+                                   }
+                    else
+                    {
+                line.Quantity = quantity;
+                
+                    }
+                
 
-        public virtual decimal ComputeTotalValue() => lineCollection.Sum(e => e.Product.Price * e.Quantity);
-
-
-        public virtual void Clear() => lineCollection.Clear();
-        public virtual IEnumerable<CartLine> Lines => lineCollection;
+        //lineCollection.Find(p => p.CartLineID == product.Id).Quantity =quantity;
     }
-    public class CartLine
-    {
-        public int CartLineID { get; set; }
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
-    }
+
+    public virtual decimal ComputeTotalValue() => lineCollection.Sum(e => e.Product.Price * e.Quantity);
+
+
+    public virtual void Clear() => lineCollection.Clear();
+    public virtual IEnumerable<CartLine> Lines => lineCollection;
+}
+public class CartLine
+{
+    public int CartLineID { get; set; }
+    public Product Product { get; set; }
+    public int Quantity { get; set; }
+}
 }

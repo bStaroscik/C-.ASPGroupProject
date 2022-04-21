@@ -65,7 +65,7 @@ namespace GroupProject.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFilename = null;
-                if(model.Photo != null)
+                if (model.Photo != null)
                 {
                     string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
 
@@ -178,13 +178,13 @@ namespace GroupProject.Controllers
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
 
-            if(product != null)
+            if (product != null)
             {
                 Cart cart = GetCart();
                 cart.AddItem(product, 1);
                 SaveCart(cart);
 
-         
+
             }
 
             return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
@@ -194,7 +194,7 @@ namespace GroupProject.Controllers
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
 
-            if(product != null)
+            if (product != null)
             {
                 Cart cart = GetCart();
                 cart.RemoveLine(product);
@@ -205,20 +205,24 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-        public IActionResult UpdateQuantity(int id, string returnUrl)
+      
+        public IActionResult UpdateQuantity(int? id, string returnUrl, int quantity)
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
-
+             
             if (product != null)
             {
                 Cart cart = GetCart();
-                cart.UpdateItem(id);
+                cart.UpdateItem(product, quantity);
                 SaveCart(cart);
-               
+
             }
 
             return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
         }
+
+
+    
 
         private void SaveCart(Cart cart)
         {
