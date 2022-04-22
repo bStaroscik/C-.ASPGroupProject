@@ -280,5 +280,25 @@ namespace GroupProject.Controllers
             Cart cart = HttpContext.Session.GetObject<Cart>("Cart") ?? new Cart();
             return cart;
         }
+
+        public async Task<IActionResult> AddPhoto(ProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string uniqueFilename = null;
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+
+                    uniqueFilename = model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFilename);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    //new FileStream(filePath, FileMode.Create);
+                    
+                }
+                await _context.SaveChangesAsync();
+            }
+            return View(model);
+        }
     }
 }
