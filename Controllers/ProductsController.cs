@@ -44,6 +44,38 @@ namespace GroupProject.Controllers
             return View(products);
         }
 
+  
+
+
+
+        public async Task<IActionResult> CreateReview(int? id,Review model)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ModelState.IsValid) {
+
+                
+                Review newReview = new Review { 
+                ProductID=id,
+                Rating = model.Rating,
+                ReviewText = model.ReviewText,
+                User = model.User
+            };
+            _context.Add(newReview);
+            await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View();
+
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {

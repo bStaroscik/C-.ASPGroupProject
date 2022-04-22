@@ -8,7 +8,8 @@ namespace GroupProject.Models
 {
     public class Review
     {
-        
+        public int? ProductID { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "You must enter a user name")]
         [Display(Name = "User Name")]
         public string User { get; set; }
