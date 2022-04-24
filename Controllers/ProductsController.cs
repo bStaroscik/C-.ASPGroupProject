@@ -44,7 +44,20 @@ namespace GroupProject.Controllers
             return View(products);
         }
 
-  
+        public ActionResult ReviewIndex(int? id)
+        {
+         
+            var reviews = from r in _context.Reviews
+                           select r;
+
+      
+                reviews = reviews.Where(s => s.ProductID.Equals(id));
+            
+
+            return View(reviews);
+        }
+
+
 
 
 
@@ -203,6 +216,23 @@ namespace GroupProject.Controllers
 
             return View(product);
         }
+
+
+
+
+
+   
+        public async Task<IActionResult> DeleteReview(int? id, int? productid)
+        {
+            var review= await _context.Reviews.FindAsync(id);
+
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ReviewIndex", new { id = productid});
+            
+        }
+
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
