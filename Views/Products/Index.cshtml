@@ -3,9 +3,6 @@
 
 @{
     ViewData["Title"] = "Index";
-    decimal ratingTotal=0;
-    int totalReviews = 0;
-    decimal average = 0;
 
 }
 
@@ -24,7 +21,11 @@
        
 @foreach (var item in Model.Products)
 {
-    
+    int totalReviews = 0;
+    double ratingTotal = 0;
+
+    double average = 0.00;
+    string averageOutput = "";
     <div class="col-lg-4 mb-2">
         <div class="card mx-auto card h-100" style="width:18rem;">
             <object class="card-img-top" data="~/images/@Html.DisplayFor(modelItem => item.ImageName)" type="image/jpg">
@@ -46,12 +47,13 @@
                 }
                 @if (totalReviews != 0)
                 {
-                     average = ratingTotal / totalReviews;
-
+                    average = ratingTotal / totalReviews;
+                    average = Math.Round(average, 2);
+                    averageOutput = "Rated "+ @average+" out of 5 stars.";
                 }
-             Rated @average out of 5 stars.
-
+                else { averageOutput = "There are no reviews for this product."; }
                 
+                @averageOutput
 
 
 
