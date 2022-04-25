@@ -17,6 +17,8 @@ namespace GroupProject.Controllers
         private readonly GroupProjectContext _context;
         private readonly IHostingEnvironment hostingEnvironment;
 
+
+
         public ProductsController(GroupProjectContext context, IHostingEnvironment hostEnv)
         {
             _context = context;
@@ -46,15 +48,21 @@ namespace GroupProject.Controllers
 
         public ActionResult ReviewIndex(int? id)
         {
+
          
             var reviews = from r in _context.Reviews
                            select r;
 
       
                 reviews = reviews.Where(s => s.ProductID.Equals(id));
-            
 
-            return View(reviews);
+            var replies = from reply in _context.Replies
+                          select reply;
+
+            ReviewViewModel reviewsReplies = new ReviewViewModel { };
+            reviewsReplies.Reviews = reviews;
+            reviewsReplies.Replies = replies;
+            return View(reviewsReplies);
         }
 
 
@@ -218,10 +226,34 @@ namespace GroupProject.Controllers
         }
 
 
+        public async Task<IActionResult> CreateReply(int? id,int productid, Reply model)
+        {
+            var review = await _context.Reviews
+    .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (ModelState.IsValid)
+            {
+
+
+                Reply newReply= new Reply
+                {
+                    
+                    ReviewID=review.Id,
+                    ReplyText = model.ReplyText,
+                    User = model.User
+                };
+                _context.Add(newReply);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View();
+
+        }
 
 
 
-   
         public async Task<IActionResult> DeleteReview(int? id, int? productid)
         {
             var review= await _context.Reviews.FindAsync(id);
