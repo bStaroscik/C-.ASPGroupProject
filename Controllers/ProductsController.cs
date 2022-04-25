@@ -42,8 +42,14 @@ namespace GroupProject.Controllers
             {
                 products = products.Where(s => s.ProductName.Contains(searchString));
             }
+            var reviews = from r in _context.Reviews
+                          select r;
 
-            return View(products);
+            ProductReviewViewModel ProductReview = new ProductReviewViewModel();
+            ProductReview.Products = products;
+            ProductReview.Reviews = reviews;
+
+            return View(ProductReview);
         }
 
         public ActionResult ReviewIndex(int? id)

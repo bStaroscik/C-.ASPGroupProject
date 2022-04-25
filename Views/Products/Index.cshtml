@@ -1,8 +1,12 @@
-﻿@model IEnumerable<GroupProject.Models.Product>
+﻿@model ProductReviewViewModel
 
 
 @{
     ViewData["Title"] = "Index";
+    decimal ratingTotal=0;
+    int totalReviews = 0;
+    decimal average = 0;
+
 }
 
 <h1>Index</h1>
@@ -18,7 +22,7 @@
 
 <div class="row w-100 p-0 w-0">
        
-@foreach (var item in Model)
+@foreach (var item in Model.Products)
 {
     
     <div class="col-lg-4 mb-2">
@@ -29,6 +33,29 @@
             <div class="card-body">
                 <h4 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h4>
                 <h5 class="card-text">@Html.DisplayFor(modelItem => item.Price)</h5>
+
+                @foreach (var review in Model.Reviews)
+                {
+                    @if (item.Id == review.ProductID)
+                    {
+
+                        ratingTotal += review.Rating;
+                        totalReviews++;
+
+                    }
+                }
+                @if (totalReviews != 0)
+                {
+                     average = ratingTotal / totalReviews;
+
+                }
+             Rated @average out of 5 stars.
+
+                
+
+
+
+
             </div>
                 <div class="card-footer text-center">
                     @if (User.IsInRole("Admin"))
