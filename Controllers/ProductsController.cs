@@ -351,8 +351,8 @@ namespace GroupProject.Controllers
 
         public async Task<IActionResult> AddPhoto(ProductViewModel model)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 string uniqueFilename = null;
                 if (model.Photo != null)
                 {
@@ -365,7 +365,7 @@ namespace GroupProject.Controllers
                     
                 }
                 await _context.SaveChangesAsync();
-            }
+            //}
             return View(model);
         }
     }
