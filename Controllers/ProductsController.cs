@@ -319,11 +319,11 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-      
-        public IActionResult UpdateQuantity(int? id, string returnUrl, int quantity)
+      [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int? id, string returnUrl, int quantity)
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
-             
+            
             if (product != null)
             {
                 Cart cart = GetCart();
