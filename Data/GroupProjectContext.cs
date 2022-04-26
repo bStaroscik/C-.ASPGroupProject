@@ -53,19 +53,18 @@ namespace GroupProject.Data
 
 
             builder.Entity<Customer>().HasData(
-    new Customer
-    {
-        ID = 1,
-        UserName = "JJones",
-        FirstName = "John",
-        LastName = "Jones",
-        Address = "1111 D St",
-        Email = "a@g.com"
+                new Customer
+                {
+                    ID = 1,
+                    UserName = "JJones",
+                    FirstName = "John",
+                    LastName = "Jones",
+                    Address = "1111 D St",
+                    Email = "a@g.com"
 
-    });
+                });
 
-builder.Entity<Product>()
-                .Property(o => o.Price).HasColumnType("decimal(8,2)");
+            builder.Entity<Product>().Property(o => o.Price).HasColumnType("decimal(8,2)");
 
             builder.Entity<Product>().HasData(
                 new Product
