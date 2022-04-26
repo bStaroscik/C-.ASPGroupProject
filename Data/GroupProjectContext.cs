@@ -27,18 +27,29 @@ namespace GroupProject.Data
         {
             base.OnModelCreating(builder);
 
-          //  builder.Entity<Order>().HasData(
-//new Order
-//{
-//   //ProductID =  ,
-//   CustomerID = ,
-//   FirstName = "John",
-//   LastName = "Jones",
-//   Address = "1111 D St",
-//   Email = "a@g.com"
+            //  builder.Entity<Order>().HasData(
+            //new Order
+            //{
+            //   //ProductID =  ,
+            //   CustomerID = ,
+            //   FirstName = "John",
+            //   LastName = "Jones",
+            //   Address = "1111 D St",
+            //   Email = "a@g.com"
 
-//});
+            //});
 
+            builder.Entity<Review>().HasData(
+    new Review
+    {
+        Id = 60,
+        User="Default User",
+        ReviewText = "John",
+        Rating = 1,
+        ProductID = 4
+
+
+    });
 
 
             builder.Entity<Customer>().HasData(
