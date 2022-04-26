@@ -23,7 +23,7 @@
 {
     int totalReviews = 0;
     double ratingTotal = 0;
-
+    string starImage = "";
     double average = 0.00;
     string averageOutput = "";
     <div class="col-lg-4 mb-2">
@@ -49,16 +49,50 @@
                 {
                     average = ratingTotal / totalReviews;
                     average = Math.Round(average, 2);
-                    averageOutput = "Rated "+ @average+" out of 5 stars.";
+                    if (average < 1)
+                    {
+                        starImage = "0Stars.png";
+                    }
+                    if (average >= 1 && average< 2)
+
+                    {
+                        starImage = "1Star.png";
+                    }
+                    if (average >= 2 && average< 3)
+
+                    {
+                        starImage = "2Star.png";
+                    }
+                    if (average >= 3 && average < 4)
+
+                    {
+                        starImage = "3Star.png";
+                    }
+                    if (average >= 4 && average < 5)
+
+                    {
+                        starImage = "4Star.png";
+                    }
+                    if (average >=5 )
+
+                    {
+                        starImage = "5Star.png";
+                    }
+                    averageOutput = "Average rating of "+ @average+" out of 5 stars. Based on " + totalReviews +" reviews.";
                 }
-                else { averageOutput = "There are no reviews for this product."; }
-                
+
+                else {
+                    starImage = "0Stars.png";
+                    averageOutput = "There are no reviews for this product."; }
+            <object class="card-img-top" data="~/images/@starImage" type="image/jpg">
+                <img class="card-img-top" src="~/images/No-Image.png" />
+            </object>
                 @averageOutput
 
 
 
 
-            </div>
+</div>
                 <div class="card-footer text-center">
                     @if (User.IsInRole("Admin"))
                     {
@@ -85,62 +119,3 @@
     </div>
 }
 </div>
-
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                <img src="~/images/@Html.DisplayFor(modelItem => item.ImageName)" width="120" asp-append-version="true" />
-            </td>
-            @if (User.IsInRole("Admin"))
-            {
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
-                </td>
-            }
-            else
-            {
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
-                </td>
-            }
-
-        </tr>
-        }
-    </tbody>
-</table>*@
