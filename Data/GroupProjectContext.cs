@@ -15,10 +15,11 @@ namespace GroupProject.Data
         {
 
         }
+        public DbSet<Reply> Replies { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders {get; set;}
-        //public DbSet<Review> Reviews { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<UserViewModel> User { get; set; }
 
@@ -26,34 +27,44 @@ namespace GroupProject.Data
         {
             base.OnModelCreating(builder);
 
-          //  builder.Entity<Order>().HasData(
-//new Order
-//{
-//   //ProductID =  ,
-//   CustomerID = ,
-//   FirstName = "John",
-//   LastName = "Jones",
-//   Address = "1111 D St",
-//   Email = "a@g.com"
+            //  builder.Entity<Order>().HasData(
+            //new Order
+            //{
+            //   //ProductID =  ,
+            //   CustomerID = ,
+            //   FirstName = "John",
+            //   LastName = "Jones",
+            //   Address = "1111 D St",
+            //   Email = "a@g.com"
 
-//});
+            //});
 
-
-
-            builder.Entity<Customer>().HasData(
-    new Customer
+            builder.Entity<Review>().HasData(
+    new Review
     {
-        ID = 1,
-        UserName = "JJones",
-        FirstName = "John",
-        LastName = "Jones",
-        Address = "1111 D St",
-        Email = "a@g.com"
+        Id = 60,
+        User="Default User",
+        ReviewText = "John",
+        Rating = 1,
+        ProductID = 4
+
 
     });
 
-builder.Entity<Product>()
-                .Property(o => o.Price).HasColumnType("decimal(8,2)");
+
+            builder.Entity<Customer>().HasData(
+                new Customer
+                {
+                    ID = 1,
+                    UserName = "JJones",
+                    FirstName = "John",
+                    LastName = "Jones",
+                    Address = "1111 D St",
+                    Email = "a@g.com"
+
+                });
+
+            builder.Entity<Product>().Property(o => o.Price).HasColumnType("decimal(8,2)");
 
             builder.Entity<Product>().HasData(
                 new Product

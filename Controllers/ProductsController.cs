@@ -17,6 +17,8 @@ namespace GroupProject.Controllers
         private readonly GroupProjectContext _context;
         private readonly IHostingEnvironment hostingEnvironment;
 
+
+
         public ProductsController(GroupProjectContext context, IHostingEnvironment hostEnv)
         {
             _context = context;
@@ -40,8 +42,65 @@ namespace GroupProject.Controllers
             {
                 products = products.Where(s => s.ProductName.Contains(searchString));
             }
+            var reviews = from r in _context.Reviews
+                          select r;
 
-            return View(products);
+            ProductReviewViewModel ProductReview = new ProductReviewViewModel();
+            ProductReview.Products = products;
+            ProductReview.Reviews = reviews;
+
+            return View(ProductReview);
+        }
+
+        public ActionResult ReviewIndex(int? id)
+        {
+
+         
+            var reviews = from r in _context.Reviews
+                           select r;
+
+      
+                reviews = reviews.Where(s => s.ProductID.Equals(id));
+
+            var replies = from reply in _context.Replies
+                          select reply;
+
+            ReviewViewModel reviewsReplies = new ReviewViewModel { };
+            reviewsReplies.Reviews = reviews;
+            reviewsReplies.Replies = replies;
+            return View(reviewsReplies);
+        }
+
+
+
+
+
+        public async Task<IActionResult> CreateReview(int? id,Review model)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ModelState.IsValid) {
+
+                
+                Review newReview = new Review { 
+                ProductID=id,
+                Rating = model.Rating,
+                ReviewText = model.ReviewText,
+                User = model.User
+            };
+            _context.Add(newReview);
+            await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View();
+
         }
 
         // GET: Products/Details/5
@@ -172,6 +231,47 @@ namespace GroupProject.Controllers
             return View(product);
         }
 
+
+        public async Task<IActionResult> CreateReply(int? id,int productid, Reply model)
+        {
+            var review = await _context.Reviews
+    .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (ModelState.IsValid)
+            {
+
+
+                Reply newReply= new Reply
+                {
+                    
+                    ReviewID=review.Id,
+                    ReplyText = model.ReplyText,
+                    User = model.User
+                };
+                _context.Add(newReply);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View();
+
+        }
+
+
+
+        public async Task<IActionResult> DeleteReview(int? id, int? productid)
+        {
+            var review= await _context.Reviews.FindAsync(id);
+
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ReviewIndex", new { id = productid});
+            
+        }
+
+
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -219,11 +319,11 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-      
-        public IActionResult UpdateQuantity(int? id, string returnUrl, int quantity)
+      [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int? id, string returnUrl, int quantity)
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
-             
+            
             if (product != null)
             {
                 Cart cart = GetCart();
@@ -247,6 +347,26 @@ namespace GroupProject.Controllers
         {
             Cart cart = HttpContext.Session.GetObject<Cart>("Cart") ?? new Cart();
             return cart;
+        }
+
+        public async Task<IActionResult> AddPhoto(ProductViewModel model)
+        {
+            //if (ModelState.IsValid)
+            //{
+                string uniqueFilename = null;
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+
+                    uniqueFilename = model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFilename);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    //new FileStream(filePath, FileMode.Create);
+                    
+                }
+                await _context.SaveChangesAsync();
+            //}
+            return View(model);
         }
     }
 }

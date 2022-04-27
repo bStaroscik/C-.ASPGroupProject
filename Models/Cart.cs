@@ -53,6 +53,7 @@ namespace GroupProject.Models
 
     public virtual void Clear() => lineCollection.Clear();
     public virtual IEnumerable<CartLine> Lines => lineCollection;
+
 }
 public class CartLine
 {
