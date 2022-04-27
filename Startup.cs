@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Data;
 using Microsoft.AspNetCore.Identity;
+using GroupProject.Models;
 
 namespace GroupProject
 {
@@ -31,7 +32,7 @@ namespace GroupProject
 
             services.AddDbContext<GroupProjectContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GroupProjectContext")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<GroupProjectContext>();
             services.AddControllersWithViews();
