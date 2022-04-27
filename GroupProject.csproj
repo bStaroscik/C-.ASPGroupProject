@@ -11,6 +11,10 @@
     <Compile Remove="Migrations\20220424232221_RepliesDB.Designer.cs" />
     <Compile Remove="Migrations\20220425013057_Replies.cs" />
     <Compile Remove="Migrations\20220425013057_Replies.Designer.cs" />
+    <Compile Remove="Migrations\20220427013053_new.cs" />
+    <Compile Remove="Migrations\20220427013053_new.Designer.cs" />
+    <Compile Remove="Migrations\20220427013418_newDB.cs" />
+    <Compile Remove="Migrations\20220427013418_newDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

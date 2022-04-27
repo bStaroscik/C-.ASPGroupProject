@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupProject.Migrations
 {
     [DbContext(typeof(GroupProjectContext))]
-    [Migration("20220426232903_NewDefaultData")]
-    partial class NewDefaultData
+    [Migration("20220427013518_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,6 +179,16 @@ namespace GroupProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductID = 1,
+                            Rating = 1,
+                            ReviewText = "John",
+                            User = "Default User"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

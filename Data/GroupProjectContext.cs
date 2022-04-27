@@ -21,7 +21,7 @@ namespace GroupProject.Data
         public DbSet<Order> Orders {get; set;}
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Product> Product { get; set; }
-        public DbSet<UserViewModel> User { get; set; }
+       // public DbSet<UserViewModel> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,11 +42,11 @@ namespace GroupProject.Data
             builder.Entity<Review>().HasData(
     new Review
     {
-        Id = 60,
+        Id = 1,
         User="Default User",
         ReviewText = "John",
         Rating = 1,
-        ProductID = 4
+        ProductID = 1
 
 
     });
