@@ -181,8 +181,8 @@ namespace GroupProject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 60,
-                            ProductID = 4,
+                            Id = 1,
+                            ProductID = 1,
                             Rating = 1,
                             ReviewText = "John",
                             User = "Default User"

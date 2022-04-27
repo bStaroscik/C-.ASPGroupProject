@@ -42,11 +42,11 @@ namespace GroupProject.Data
             builder.Entity<Review>().HasData(
     new Review
     {
-        Id = 60,
+        Id = 1,
         User="Default User",
         ReviewText = "John",
         Rating = 1,
-        ProductID = 4
+        ProductID = 1
 
 
     });

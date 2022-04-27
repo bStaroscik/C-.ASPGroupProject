@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupProject.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class newDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,37 @@ namespace GroupProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductID = table.Column<int>(nullable: false),
+                    CustomerID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -60,6 +91,38 @@ namespace GroupProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Replies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReviewID = table.Column<int>(nullable: true),
+                    ProductID = table.Column<int>(nullable: true),
+                    User = table.Column<string>(nullable: false),
+                    ReplyText = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Replies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductID = table.Column<int>(nullable: true),
+                    User = table.Column<string>(nullable: false),
+                    ReviewText = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,8 +171,8 @@ namespace GroupProject.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -153,8 +216,8 @@ namespace GroupProject.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -169,19 +232,24 @@ namespace GroupProject.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Product",
-                columns: new[] { "Id", "Category", "ImageName", "Price", "ProductName" },
-                values: new object[] { 1, "Art", null, 10.99m, "Product1" });
+                table: "Customers",
+                columns: new[] { "ID", "Address", "Email", "FirstName", "LastName", "UserName" },
+                values: new object[] { 1, "1111 D St", "a@g.com", "John", "Jones", "JJones" });
 
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "Id", "Category", "ImageName", "Price", "ProductName" },
-                values: new object[] { 2, "Art", null, 20.99m, "Product2" });
+                values: new object[,]
+                {
+                    { 1, "Art", null, 10.99m, "Product1" },
+                    { 2, "Art", null, 20.99m, "Product2" },
+                    { 3, "Art", null, 30.99m, "Product3" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Product",
-                columns: new[] { "Id", "Category", "ImageName", "Price", "ProductName" },
-                values: new object[] { 3, "Art", null, 30.99m, "Product3" });
+                table: "Reviews",
+                columns: new[] { "Id", "ProductID", "Rating", "ReviewText", "User" },
+                values: new object[] { 1, 1, 1, "John", "Default User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -241,7 +309,19 @@ namespace GroupProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "Replies");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
