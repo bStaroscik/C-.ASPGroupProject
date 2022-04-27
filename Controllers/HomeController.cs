@@ -1,5 +1,6 @@
 ﻿using GroupProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -33,6 +34,7 @@ namespace GroupProject.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult AdminPanel()
         {
+            //UserManager.Users.ToList();
             return View();
         }
 
