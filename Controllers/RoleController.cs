@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GroupProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace GroupProject.Controllers
 {
     public class RoleController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr)
+        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMgr)
         {
             userManager = userMgr;
             roleManager = roleMgr;
@@ -36,7 +37,7 @@ namespace GroupProject.Controllers
                 await roleManager.CreateAsync(role);
 
                 //Create a user with Admin Powers
-                var user = new IdentityUser();
+                var user = new ApplicationUser();
                 user.UserName = "AdminUser@email.com";
                 user.Email = "AdminUser@email.com";
 
@@ -79,7 +80,7 @@ namespace GroupProject.Controllers
                 await roleManager.CreateAsync(role);
 
                 //Create role with Mod powers
-                var user = new IdentityUser();
+                var user = new ApplicationUser();
                 user.UserName = "ModeratorUser@email.com";
                 user.Email = "ModeratorUser@email.com";
 

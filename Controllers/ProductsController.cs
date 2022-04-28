@@ -319,21 +319,32 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public  IActionResult UpdateQuantity(int? id, string returnUrl, string quantity)
+
+        public IActionResult UpdateQuantity(int? id, string returnUrl, string quantity)
         {
-            Product product = _context.Product.FirstOrDefault(p => p.Id == id);
-            
-            if (product != null)
+            try
             {
+                Product product = _context.Product.FirstOrDefault(p => p.Id == id);
+
+                int newQuantity=Convert.ToInt32(quantity);
+
                 Cart cart = GetCart();
-                cart.UpdateItem(product, Convert.ToInt32(quantity));
+                cart.UpdateItem(product, newQuantity);
                 SaveCart(cart);
+                return View("AddToCart", new CartIndexViewModel { Cart = cart, ReturnUrl = returnUrl });
 
             }
+            catch(Exception e) 
+            {
+                Cart cart = GetCart();
+                SaveCart(cart);
+                return View("AddToCart", new CartIndexViewModel { Cart = cart, ReturnUrl = returnUrl });
+            }
+            
 
-            return View("AddToCart", new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
+
+        
+      
         }
 
 

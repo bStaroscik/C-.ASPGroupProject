@@ -94,23 +94,22 @@
 
 </div>
                 <div class="card-footer text-center">
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin") || (User.IsInRole("Moderator")))
                     {
                     <p>
                         <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         <a class="btn btn-primary" asp-action="ReviewIndex" asp-route-id="@item.Id">Read Review</a>
-                        <a class="btn btn-primary" asp-action="CreateReview" asp-route-id="@item.Id">Leave a Review</a>
                     </p>
                     }
                     else
                     {
                 <p>
-                    <a class="btn btn-primary" asp-action="CreateReview" asp-route-id="@item.Id">Leave a Review</a>
-                    <a class="btn btn-primary" asp-action="ReviewIndex" asp-route-id="@item.Id">Read Review</a>
                     <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
+                    <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a><br><br>
+                    <a class="btn btn-primary" asp-action="CreateReview" asp-route-id="@item.Id">Leave Review</a>
+                    <a class="btn btn-primary" asp-action="ReviewIndex" asp-route-id="@item.Id">Read Review</a>
                 </p>
                     }
                 </div>
