@@ -32,7 +32,7 @@ namespace GroupProject
 
             services.AddDbContext<GroupProjectContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GroupProjectContext")));
-            services.AddDefaultIdentity<ApplicationUser>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<GroupProjectContext>();
             services.AddControllersWithViews();
