@@ -70,24 +70,59 @@ namespace GroupProject.Data
                 new Product
                 {
                     Id = 1,
-                    ProductName = "Product1",
-                    Price = 10.99m,
-                    Category = "Art"
+                    ProductName = "Rolling Art Cart",
+                    Price = 601.99m,
+                    ImageName = "RollingArtCart.jpg",
+                    Category = "Furnishings"
 
                 },
                 new Product
                 {
                     Id = 2,
-                    ProductName = "Product2",
+                    ProductName = "Water Colors",
                     Price = 20.99m,
-                    Category = "Art"
+                    ImageName = "WaterColors.jpg",
+                    Category = "Supplies"
                 },
                 new Product
                 {
                     Id = 3,
-                    ProductName = "Product3",
-                    Price = 30.99m,
-                    Category = "Art"
+                    ProductName = "Professional Oil-Based Colored Pencils",
+                    Price = 40.99m,
+                    ImageName = "ColoredPencils.jpg",
+                    Category = "Supplies"
+                },
+                new Product
+                {
+                    Id = 4,
+                    ProductName = "Paint Brush Variety Pack",
+                    Price = 35.59m,
+                    ImageName = "PaintBrush.jpg",
+                    Category = "Painting"
+                },
+                new Product
+                {
+                    Id = 5,
+                    ProductName = "Art Desk Easel",
+                    Price = 32.99m,
+                    ImageName = "Easel.jpg",
+                    Category = "Painting"
+                },
+                new Product
+                {
+                    Id = 6,
+                    ProductName = "Apron",
+                    Price = 10.99m,
+                    ImageName = "Apron.jpg",
+                    Category = "Supplies"
+                },
+                new Product
+                {
+                    Id = 7,
+                    ProductName = "",
+                    Price = 10.99m,
+                    ImageName = "",
+                    Category = ""
                 }
                 );
         }
