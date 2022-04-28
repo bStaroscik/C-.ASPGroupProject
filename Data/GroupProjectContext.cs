@@ -119,10 +119,10 @@ namespace GroupProject.Data
                 new Product
                 {
                     Id = 7,
-                    ProductName = "",
-                    Price = 10.99m,
-                    ImageName = "",
-                    Category = ""
+                    ProductName = "Do It Yourself Art Kit",
+                    Price = 49.99m,
+                    ImageName = "ArtKit.jpg",
+                    Category = "DIY"
                 }
                 );
         }
