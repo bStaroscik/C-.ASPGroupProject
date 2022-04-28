@@ -319,15 +319,16 @@ namespace GroupProject.Controllers
         }
 
         //Call Update method from Cart class
-      [HttpPost]
-        public async Task<IActionResult> UpdateQuantity(int? id, string returnUrl, int quantity)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public  IActionResult UpdateQuantity(int? id, string returnUrl, string quantity)
         {
             Product product = _context.Product.FirstOrDefault(p => p.Id == id);
             
             if (product != null)
             {
                 Cart cart = GetCart();
-                cart.UpdateItem(product, quantity);
+                cart.UpdateItem(product, Convert.ToInt32(quantity));
                 SaveCart(cart);
 
             }
@@ -364,9 +365,48 @@ namespace GroupProject.Controllers
                     //new FileStream(filePath, FileMode.Create);
                     
                 }
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             //}
             return View(model);
+        }
+
+        public IActionResult SearchProducts(string searchTerm) 
+        {
+            //the search term is checked against each product name 
+            //if the product name contains the search term, it get's
+            //put into a list of searchResults.
+            //each string is made lower case to ensure proper matching.
+            //"Product" would not 
+         List<Product> searchResults = new List<Product>();
+           
+            string lowerName = searchTerm.ToLower();
+            var products = from p in _context.Product
+                           select p;
+
+            foreach (Product product in products) 
+            {
+                if (!String.IsNullOrEmpty(searchTerm)){
+                    string productName = product.ProductName.ToLower();
+                    if (productName.Contains(lowerName)) { 
+
+                        searchResults.Add(product);
+                    } 
+
+
+
+
+
+                }
+            }
+  
+            var reviews = from r in _context.Reviews
+                          select r;
+
+            ProductReviewViewModel ProductReview = new ProductReviewViewModel();
+            ProductReview.Products = searchResults;
+            ProductReview.Reviews = reviews;
+            return View(ProductReview);
+            
         }
     }
 }
