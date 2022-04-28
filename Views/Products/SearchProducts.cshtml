@@ -1,0 +1,129 @@
+﻿@model ProductReviewViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<h1>Index</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+}
+
+
+<div class="row w-100 p-0 w-0">
+   @if (Model.Products.Any())
+   {
+    @foreach (var item in Model.Products)
+    {
+        int totalReviews = 0;
+        double ratingTotal = 0;
+        string starImage = "";
+        double average = 0.00;
+        string averageOutput = "";
+        <div class="col-lg-4 mb-2">
+            <div class="card mx-auto card h-100" style="width:18rem;">
+                <object class="card-img-top" data="~/images/@Html.DisplayFor(modelItem => item.ImageName)" type="image/jpg">
+                    <img class="card-img-top" src="~/images/No-Image.png" />
+                </object>
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                    <h5 class="card-text">@Html.DisplayFor(modelItem => item.Price)</h5>
+
+                    @foreach (var review in Model.Reviews)
+                    {
+                        @if (item.Id == review.ProductID)
+                        {
+
+                            ratingTotal += review.Rating;
+                            totalReviews++;
+
+                        }
+                    }
+                    @if (totalReviews != 0)
+                    {
+                        average = ratingTotal / totalReviews;
+                        average = Math.Round(average, 2);
+                        if (average < 1)
+                        {
+                            starImage = "0Stars.png";
+                        }
+                        if (average >= 1 && average < 2)
+
+                        {
+                            starImage = "1Star.png";
+                        }
+                        if (average >= 2 && average < 3)
+
+                        {
+                            starImage = "2Star.png";
+                        }
+                        if (average >= 3 && average < 4)
+
+                        {
+                            starImage = "3Star.png";
+                        }
+                        if (average >= 4 && average < 5)
+
+                        {
+                            starImage = "4Star.png";
+                        }
+                        if (average >= 5)
+
+                        {
+                            starImage = "5Star.png";
+                        }
+                        averageOutput = "Average rating of " + @average + " out of 5 stars. Based on " + totalReviews + " reviews.";
+                    }
+
+                    else
+                    {
+                        starImage = "0Stars.png";
+                        averageOutput = "There are no reviews for this product.";
+                    }
+                    <object class="card-img-top" data="~/images/@starImage" type="image/jpg">
+                        <img class="card-img-top" src="~/images/No-Image.png" />
+                    </object>
+                    @averageOutput
+
+
+
+
+                </div>
+                <div class="card-footer text-center">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <p>
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="btn btn-primary" asp-action="ReviewIndex" asp-route-id="@item.Id">Read Review</a>
+                            <a class="btn btn-primary" asp-action="CreateReview" asp-route-id="@item.Id">Leave a Review</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            <a class="btn btn-primary" asp-action="CreateReview" asp-route-id="@item.Id">Leave a Review</a>
+                            <a class="btn btn-primary" asp-action="ReviewIndex" asp-route-id="@item.Id">Read Review</a>
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.Id" asp-route-returnUrl="Products/Index">Add To Cart</a>
+                        </p>
+                    }
+                </div>
+
+            </div>
+        </div>
+    }
+
+   }
+   else { 
+   <h4>There are no products with that name.</h4>
+   }
+</div>
