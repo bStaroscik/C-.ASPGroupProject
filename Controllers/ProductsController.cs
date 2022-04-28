@@ -54,12 +54,8 @@ namespace GroupProject.Controllers
 
         public ActionResult ReviewIndex(int? id)
         {
-
-         
             var reviews = from r in _context.Reviews
                            select r;
-
-      
                 reviews = reviews.Where(s => s.ProductID.Equals(id));
 
             var replies = from reply in _context.Replies
@@ -70,10 +66,6 @@ namespace GroupProject.Controllers
             reviewsReplies.Replies = replies;
             return View(reviewsReplies);
         }
-
-
-
-
 
         public async Task<IActionResult> CreateReview(int? id,Review model)
         {
@@ -86,8 +78,6 @@ namespace GroupProject.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ModelState.IsValid) {
-
-                
                 Review newReview = new Review { 
                 ProductID=id,
                 Rating = model.Rating,
@@ -231,20 +221,14 @@ namespace GroupProject.Controllers
             return View(product);
         }
 
-
         public async Task<IActionResult> CreateReply(int? id,int productid, Reply model)
         {
-            var review = await _context.Reviews
-    .FirstOrDefaultAsync(m => m.Id == id);
-
+            var review = await _context.Reviews.FirstOrDefaultAsync(m => m.Id == id);
 
             if (ModelState.IsValid)
             {
-
-
                 Reply newReply= new Reply
                 {
-                    
                     ReviewID=review.Id,
                     ReplyText = model.ReplyText,
                     User = model.User
@@ -255,10 +239,7 @@ namespace GroupProject.Controllers
 
             }
             return View();
-
         }
-
-
 
         public async Task<IActionResult> DeleteReview(int? id, int? productid)
         {
@@ -297,8 +278,6 @@ namespace GroupProject.Controllers
                 Cart cart = GetCart();
                 cart.AddItem(product, 1);
                 SaveCart(cart);
-
-
             }
 
             return View(new CartIndexViewModel { Cart = GetCart(), ReturnUrl = returnUrl });
@@ -340,15 +319,7 @@ namespace GroupProject.Controllers
                 SaveCart(cart);
                 return View("AddToCart", new CartIndexViewModel { Cart = cart, ReturnUrl = returnUrl });
             }
-            
-
-
-        
-      
         }
-
-
-    
 
         private void SaveCart(Cart cart)
         {
@@ -402,11 +373,6 @@ namespace GroupProject.Controllers
 
                         searchResults.Add(product);
                     } 
-
-
-
-
-
                 }
             }
   

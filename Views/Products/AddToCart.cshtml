@@ -45,8 +45,6 @@
                 @*<td><a class="btn btn-primary"  asp-route-id="@Model.Cart.Lines.ToList()[i].Product.Id"  asp-route-quantity="quantity" asp-route-returnUrl="Products/AddToCart">Update Quantity</a></td>*@
 
                 <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@Model.Cart.Lines.ToList()[i].Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
-
-
             </tr>
 
             <tr>

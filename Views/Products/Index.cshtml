@@ -16,7 +16,6 @@
 
 }
 
-
 <div class="row w-100 p-0 w-0">
        
 @foreach (var item in Model.Products)
@@ -88,10 +87,6 @@
                 <img class="card-img-top" src="~/images/No-Image.png" />
             </object>
                 @averageOutput
-
-
-
-
 </div>
                 <div class="card-footer text-center">
                     @if (User.IsInRole("Admin") || (User.IsInRole("Moderator")))

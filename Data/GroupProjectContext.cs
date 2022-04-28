@@ -16,7 +16,6 @@ namespace GroupProject.Data
 
         }
         public DbSet<Reply> Replies { get; set; }
-        
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders {get; set;}
         public DbSet<Review> Reviews { get; set; }
@@ -27,30 +26,17 @@ namespace GroupProject.Data
         {
             base.OnModelCreating(builder);
 
-            //  builder.Entity<Order>().HasData(
-            //new Order
-            //{
-            //   //ProductID =  ,
-            //   CustomerID = ,
-            //   FirstName = "John",
-            //   LastName = "Jones",
-            //   Address = "1111 D St",
-            //   Email = "a@g.com"
-
-            //});
-
             builder.Entity<Review>().HasData(
-    new Review
-    {
-        Id = 1,
-        User="Default User",
-        ReviewText = "John",
-        Rating = 1,
-        ProductID = 1
+                new Review
+                {
+                    Id = 1,
+                    User="Default User",
+                    ReviewText = "John",
+                    Rating = 1,
+                    ProductID = 1
 
 
-    });
-
+                });
 
             builder.Entity<Customer>().HasData(
                 new Customer
