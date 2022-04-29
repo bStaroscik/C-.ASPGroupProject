@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GroupProject.Data
 {
-    public class GroupProjectContext : IdentityDbContext
+    public class GroupProjectContext : IdentityDbContext<ApplicationUser>
     {
         public GroupProjectContext (DbContextOptions<GroupProjectContext> options)
             : base(options)

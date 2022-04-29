@@ -34,19 +34,6 @@ namespace GroupProject.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult AdminPanel()
-        {
-            //UserManager.Users.ToList();
-            return View();
-        }
-
-        [Authorize(Roles = "Moderator")]
-        public IActionResult ModeratorPanel()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
