@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupProject.Migrations
 {
-    public partial class newDB : Migration
+    public partial class FinalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,14 @@ namespace GroupProject.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,38 +101,6 @@ namespace GroupProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Replies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReviewID = table.Column<int>(nullable: true),
-                    ProductID = table.Column<int>(nullable: true),
-                    User = table.Column<string>(nullable: false),
-                    ReplyText = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Replies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductID = table.Column<int>(nullable: true),
-                    User = table.Column<string>(nullable: false),
-                    ReviewText = table.Column<string>(nullable: false),
-                    Rating = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -171,8 +146,8 @@ namespace GroupProject.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -216,8 +191,8 @@ namespace GroupProject.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -227,6 +202,50 @@ namespace GroupProject.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductID = table.Column<int>(nullable: false),
+                    User = table.Column<string>(nullable: false),
+                    ReviewText = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Product_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Replies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReviewID = table.Column<int>(nullable: false),
+                    ProductID = table.Column<int>(nullable: true),
+                    User = table.Column<string>(nullable: false),
+                    ReplyText = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Replies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Replies_Reviews_ReviewID",
+                        column: x => x.ReviewID,
+                        principalTable: "Reviews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -241,15 +260,27 @@ namespace GroupProject.Migrations
                 columns: new[] { "Id", "Category", "ImageName", "Price", "ProductName" },
                 values: new object[,]
                 {
-                    { 1, "Art", null, 10.99m, "Product1" },
-                    { 2, "Art", null, 20.99m, "Product2" },
-                    { 3, "Art", null, 30.99m, "Product3" }
+                    { 1, "Furnishings", "RollingArtCart.jpg", 601.99m, "Rolling Art Cart" },
+                    { 2, "Supplies", "WaterColors.jpg", 20.99m, "Water Colors" },
+                    { 3, "Supplies", "ColoredPencils.jpg", 40.99m, "Professional Oil-Based Colored Pencils" },
+                    { 4, "Painting", "PaintBrush.jpg", 35.59m, "Paint Brush Variety Pack" },
+                    { 5, "Painting", "Easel.jpg", 32.99m, "Art Desk Easel" },
+                    { 6, "Supplies", "Apron.jpg", 10.99m, "Apron" },
+                    { 7, "DIY", "ArtKit.jpg", 49.99m, "Do It Yourself Art Kit" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Reviews",
                 columns: new[] { "Id", "ProductID", "Rating", "ReviewText", "User" },
-                values: new object[] { 1, 1, 1, "John", "Default User" });
+                values: new object[,]
+                {
+                    { 1, 1, 5, "I would buy this again", "J Johnson" },
+                    { 3, 1, 5, "This was just what I needed", "Unregistered User" },
+                    { 2, 2, 3, "I regret my purchase", "Sam E." },
+                    { 4, 2, 1, "Very poor quality", "Arty" },
+                    { 5, 3, 1, "Very poor quality", "Arty" },
+                    { 6, 5, 5, "Very high quality", "Jules" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -289,6 +320,16 @@ namespace GroupProject.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replies_ReviewID",
+                table: "Replies",
+                column: "ReviewID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_ProductID",
+                table: "Reviews",
+                column: "ProductID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -315,19 +356,19 @@ namespace GroupProject.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Product");
-
-            migrationBuilder.DropTable(
                 name: "Replies");
-
-            migrationBuilder.DropTable(
-                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "Product");
         }
     }
 }

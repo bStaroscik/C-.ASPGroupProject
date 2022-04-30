@@ -10,8 +10,13 @@ namespace GroupProject.Models
     public class Reply
     {
 
-        [ForeignKey("ReviewID")]
+        [Required]
         public int? ReviewID { get; set; }
+
+
+        [ForeignKey("ReviewID")]
+        public virtual Review Review { get; set; }
+
         public int? ProductID { get; set; }
             public int Id { get; set; }
         

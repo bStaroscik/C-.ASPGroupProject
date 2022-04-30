@@ -15,7 +15,7 @@ namespace GroupProject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.23")
+                .HasAnnotation("ProductVersion", "3.1.24")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -177,6 +177,7 @@ namespace GroupProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ReviewID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("User")
@@ -184,6 +185,8 @@ namespace GroupProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReviewID");
 
                     b.ToTable("Replies");
                 });
@@ -196,6 +199,7 @@ namespace GroupProject.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ProductID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
@@ -211,6 +215,8 @@ namespace GroupProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductID");
+
                     b.ToTable("Reviews");
 
                     b.HasData(
@@ -218,9 +224,49 @@ namespace GroupProject.Migrations
                         {
                             Id = 1,
                             ProductID = 1,
+                            Rating = 5,
+                            ReviewText = "I would buy this again",
+                            User = "J Johnson"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ProductID = 2,
+                            Rating = 3,
+                            ReviewText = "I regret my purchase",
+                            User = "Sam E."
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ProductID = 1,
+                            Rating = 5,
+                            ReviewText = "This was just what I needed",
+                            User = "Unregistered User"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ProductID = 2,
                             Rating = 1,
-                            ReviewText = "John",
-                            User = "Default User"
+                            ReviewText = "Very poor quality",
+                            User = "Arty"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ProductID = 3,
+                            Rating = 1,
+                            ReviewText = "Very poor quality",
+                            User = "Arty"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ProductID = 5,
+                            Rating = 5,
+                            ReviewText = "Very high quality",
+                            User = "Jules"
                         });
                 });
 
@@ -449,6 +495,24 @@ namespace GroupProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("GroupProject.Models.Reply", b =>
+                {
+                    b.HasOne("GroupProject.Models.Review", "Review")
+                        .WithMany()
+                        .HasForeignKey("ReviewID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GroupProject.Models.Review", b =>
+                {
+                    b.HasOne("GroupProject.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
