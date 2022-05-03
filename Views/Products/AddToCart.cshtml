@@ -6,8 +6,10 @@
 <h1>Your Cart</h1>
 
 @{
+    int finalTotalItems = 0;
     int totalItems = 0;
     double totalDue = 0.0;
+    double finalTotalDue = 0.0;
 }
 <table class="table table-bordered table-striped list ">
     <thead>
@@ -22,45 +24,50 @@
     </thead>
 
     @for (var i = 0; i < Model.Cart.Lines.Count(); i++)
-    { 
+    {
         <tbody>
-           @{ 
-               totalItems += (int)Model.Cart.Lines.ToList()[i].Quantity;
-               totalDue += totalItems*(double)Model.Cart.Lines.ToList()[i].Product.Price;
-               int id=(int)@Model.Cart.Lines.ToList()[i].Product.Id; 
-           }<tr>
+            @{
+                totalItems = 0;
+                totalDue = 0;
+                totalItems += (int)Model.Cart.Lines.ToList()[i].Quantity;
+                totalDue += totalItems * (double)Model.Cart.Lines.ToList()[i].Product.Price;
+                int id = (int)@Model.Cart.Lines.ToList()[i].Product.Id;
+                finalTotalItems += totalItems;
+                finalTotalDue += totalDue;
+            }
+            <tr>
                 <td>
                     @using (Html.BeginForm("UpdateQuantity", "Products", FormMethod.Get))
                     {
                         @Html.TextBox("quantity", "1")
-                        <input type="hidden" name="id" value="@id"/>
+                        <input type="hidden" name="id" value="@id" />
                         <input type="submit" value="Update quantity" />
                     }
                 </td>
 
                 <td>@Model.Cart.Lines.ToList()[i].Product.ProductName</td>
                 <td>@Model.Cart.Lines.ToList()[i].Product.Price.ToString("c")</td>
-                <td>@(totalItems)</td>
+                <td>@Model.Cart.Lines.ToList()[i].Quantity </td>
 
                 @*<td><a class="btn btn-primary"  asp-route-id="@Model.Cart.Lines.ToList()[i].Product.Id"  asp-route-quantity="quantity" asp-route-returnUrl="Products/AddToCart">Update Quantity</a></td>*@
 
                 <td><a class="btn btn-primary" asp-action="RemoveFromCart" asp-route-id="@Model.Cart.Lines.ToList()[i].Product.Id" asp-route-returnUrl="Products/Index">Remove From Cart</a></td>
             </tr>
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><h5>@totalItems Item(s) in Cart</h5></td>
-                <td><h5>Total Due: @totalDue.ToString("c")</h5></td>
-            </tr>
+
 
 
 
         </tbody>
     }
-
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><h5>@finalTotalItems Item(s) in Cart</h5></td>
+        <td><h5>Total Due: @finalTotalDue.ToString("c")</h5></td>
+    </tr>
 </table>
 
 

@@ -69,27 +69,34 @@ namespace GroupProject.Controllers
 
         public async Task<IActionResult> CreateReview(int? id,Review model)
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
+            try
+            {
+                var product = await _context.Product
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                model.ProductID = id;
+                model.Product = product;
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (ModelState.IsValid) {
-                Review newReview = new Review { 
-                ProductID=id,
-                Rating = model.Rating,
-                ReviewText = model.ReviewText,
-                User = model.User
-            };
-            _context.Add(newReview);
-            await _context.SaveChangesAsync();
+                Review newReview = new Review
+                {
+                    ProductID = id,
+                    Rating = model.Rating,
+                    ReviewText = model.ReviewText,
+                    User = model.User
+                };
+                _context.Add(newReview);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
 
             }
-            return View();
+            catch (Exception e)
+            {
+                return View();
+            }
 
         }
 
@@ -225,20 +232,21 @@ namespace GroupProject.Controllers
         {
             var review = await _context.Reviews.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ModelState.IsValid)
+            try {
+                
+                    Reply newReply = new Reply
+                    {
+                        ReviewID = review.Id,
+                        ReplyText = model.ReplyText,
+                        User = model.User
+                    };
+                    _context.Add(newReply);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            catch (Exception e)
             {
-                Reply newReply= new Reply
-                {
-                    ReviewID=review.Id,
-                    ReplyText = model.ReplyText,
-                    User = model.User
-                };
-                _context.Add(newReply);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-
-            }
-            return View();
+                return View(); }
         }
 
         public async Task<IActionResult> DeleteReview(int? id, int? productid)

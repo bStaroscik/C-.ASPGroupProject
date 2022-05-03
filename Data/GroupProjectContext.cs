@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GroupProject.Data
 {
-    public class GroupProjectContext : IdentityDbContext<ApplicationUser>
+    public class GroupProjectContext : IdentityDbContext
     {
         public GroupProjectContext (DbContextOptions<GroupProjectContext> options)
             : base(options)
@@ -16,6 +16,7 @@ namespace GroupProject.Data
 
         }
         public DbSet<Reply> Replies { get; set; }
+        
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders {get; set;}
         public DbSet<Review> Reviews { get; set; }
@@ -26,18 +27,87 @@ namespace GroupProject.Data
         {
             base.OnModelCreating(builder);
 
+            //  builder.Entity<Order>().HasData(
+            //new Order
+            //{
+            //   //ProductID =  ,
+            //   CustomerID = ,
+            //   FirstName = "John",
+            //   LastName = "Jones",
+            //   Address = "1111 D St",
+            //   Email = "a@g.com"
+
+            //});
+
             builder.Entity<Review>().HasData(
-                new Review
-                {
-                    Id = 1,
-                    User="Default User",
-                    ReviewText = "John",
-                    Rating = 1,
-                    ProductID = 1
+    new Review
+    {
+        Id = 1,
+        User="J Johnson",
+        ReviewText = "I would buy this again",
+        Rating = 5,
+        ProductID = 1
 
 
-                });
+    },
+        new Review
+        {
+            Id = 2,
+            User = "Sam E.",
+            ReviewText = "I regret my purchase",
+            Rating = 3,
+            ProductID = 2
 
+
+        },
+
+            new Review
+            {
+                Id = 3,
+                User = "Unregistered User",
+                ReviewText = "This was just what I needed",
+                Rating = 5,
+                ProductID = 1
+
+
+            },
+
+
+            new Review
+            {
+                Id = 4,
+                User = "Arty",
+                ReviewText = "Very poor quality",
+                Rating = 1,
+                ProductID = 2
+
+
+            },
+                      new Review
+                      {
+                          Id = 5,
+                          User = "Arty",
+                          ReviewText = "Very poor quality",
+                          Rating = 1,
+                          ProductID = 3
+
+
+                      },
+                                      new Review
+                                      {
+                                          Id = 6,
+                                          User = "Jules",
+                                          ReviewText = "Very high quality",
+                                          Rating = 5,
+                                          ProductID = 5
+
+
+                                      }
+
+
+
+
+            );
             builder.Entity<Customer>().HasData(
                 new Customer
                 {
