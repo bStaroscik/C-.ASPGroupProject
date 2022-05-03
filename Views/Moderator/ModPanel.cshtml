@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Moderator Panel";
 }
+
+
+<div class="row w-100 p-0 w-0">
+    <div class="col-lg-4 mb-2">
+        <div class="card mx-auto card h-100" style="width:18rem;">
+            <img class="card-img-top" src="~/images/AdminUsers.png" />
+            <div class="card-body">
+                <h4 class="card-title">Users</h4>
+                <h5 class="card-text">Adjust/Create user profiles</h5>
+            </div>
+            <div class="card-footer text-center">
+                <p>
+                    <a class="btn btn-primary" asp-action="ListUsers">Enter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-2">
+        <div class="card mx-auto card h-100" style="width:18rem;">
+            <img class="card-img-top" src="~/images/AdminRoles.png" />
+            <div class="card-body">
+                <h4 class="card-title">Roles</h4>
+                <h5 class="card-text">Adjust/Create Roles</h5>
+            </div>
+            <div class="card-footer text-center">
+                <p>
+                    <a class="btn btn-primary" asp-action="">Enter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-2">
+        <div class="card mx-auto card h-100" style="width:18rem;">
+            <img class="card-img-top" src="~/images/AdminProducts.png" />
+            <div class="card-body">
+                <h4 class="card-title">Users</h4>
+                <h5 class="card-text">Make adjustments to Products</h5>
+            </div>
+            <div class="card-footer text-center">
+                <p>
+                    <a class="btn btn-primary" asp-action="">Enter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
