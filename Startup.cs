@@ -34,6 +34,7 @@ namespace GroupProject
                     options.UseSqlServer(Configuration.GetConnectionString("GroupProjectContext")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoles<IdentityRole>()
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<GroupProjectContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
